@@ -23,4 +23,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['as' => 'backend.','middleware' => ['auth']], function (){
    Route::get('dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
+   Route::get('posts/create', [App\Http\Controllers\Backend\PostController::class, 'create'])->name('posts.create');
+   Route::post('posts', [App\Http\Controllers\Backend\PostController::class, 'store'])->name('posts.store');
 });
