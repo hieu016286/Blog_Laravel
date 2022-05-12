@@ -9,7 +9,21 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'title',
+        'slug',
+        'image',
+        'body',
+        'status',
+        'is_approved'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function scopeWithTitle($query, $title) {
+        return $title ? $query->where('title', 'LIKE', "%{$title}%") : null;
     }
 }

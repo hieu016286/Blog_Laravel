@@ -17,6 +17,9 @@ class PermissionSeeder extends Seeder
     {
         DB::table('permissions')->insert([
             [
+                'name' => 'Index Posts',
+            ],
+            [
                 'name' => 'Index Post',
             ],
             [

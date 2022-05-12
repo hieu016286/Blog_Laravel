@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $guest = Role::where('name', '=', 'guest')->first();
-        $guest->permissions()->attach(Permission::all()->pluck('id')->toArray());
+        $guest->permissions()->attach(Permission::whereNotIn('name', ['Index Posts'])->pluck('id')->toArray());
     }
 }
