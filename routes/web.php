@@ -26,5 +26,7 @@ Route::group(['as' => 'backend.','middleware' => ['auth']], function (){
    Route::get('posts', [App\Http\Controllers\Backend\PostController::class, 'index'])->name('posts.index');
    Route::get('posts/create', [App\Http\Controllers\Backend\PostController::class, 'create'])->name('posts.create');
    Route::post('posts', [App\Http\Controllers\Backend\PostController::class, 'store'])->name('posts.store');
+   Route::get('posts/{post}/edit', [App\Http\Controllers\Backend\PostController::class, 'edit'])->name('posts.edit');
+   Route::put('posts/{post}', [App\Http\Controllers\Backend\PostController::class, 'update'])->name('posts.update');
    Route::delete('posts/{post}', [App\Http\Controllers\Backend\PostController::class, 'destroy'])->name('posts.destroy');
 });

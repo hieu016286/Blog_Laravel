@@ -15,7 +15,7 @@ class PostController extends Controller
     }
 
     public function index(Request $request) {
-        $posts = $this->postService->search($request);
+        $posts = $this->postService->searchAllPost($request);
         return view('backend.posts.index', compact('posts','request'));
     }
 
@@ -26,6 +26,16 @@ class PostController extends Controller
     public function store(PostRequest $request) {
         $this->postService->create($request);
         return redirect()->route('backend.posts.index')->with('success', 'Create Post Success');
+    }
+
+    public function edit($id) {
+        $post = $this->postService->findById($id);
+        return view('backend.posts.edit', compact('post'));
+    }
+
+    public function update(PostRequest $request, $id) {
+        $this->postService->update($request, $id);
+        return redirect()->route('backend.posts.index')->with('update', 'Update Post Success');
     }
 
     public function destroy($id) {

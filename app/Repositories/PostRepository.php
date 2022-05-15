@@ -14,4 +14,9 @@ class PostRepository extends BaseRepository
         $title = $dataSearch['title'];
         return $this->model->where('user_id', $id)->withTitle($title)->latest('id')->paginate(1);
     }
+
+    public function searchAllPost($dataSearch) {
+        $title = $dataSearch['title'];
+        return $this->model->withTitle($title)->latest('id')->paginate(1);
+    }
 }

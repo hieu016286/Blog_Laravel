@@ -17,15 +17,22 @@ trait HandleImage
             if(!Storage::disk('public')->exists('post')) {
                 Storage::disk('public')->makeDirectory('post');
             }
-            $postImage = Image::make($destination)->resize(300,300)->save();
+            $postImage = Image::make($destination)->resize(259,194)->save();
             Storage::disk('public')->put('post/'.$filename, $postImage);
             return $filename;
         }
     }
 
+    public function updateImage($request, $currentImage) {
+        if($this->verifyImage($request)) {
+            $this->deleteImage($currentImage);
+        }
+        return $this->saveImage($request);
+    }
+
     public function deleteImage($imageName) {
         if(Storage::disk('public')->exists('post/'.$imageName)) {
-            Storage::disk('public')->delete('post/'.$imageName);
+            return Storage::disk('public')->delete('post/'.$imageName);
         }
     }
 }
