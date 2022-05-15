@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait HandlePermission
 {
-    public function hasPermission($permission)
+    public function hasPermission($permission): bool
     {
         if ($this->roles->contains('name', 'admin')) {
             return true;
@@ -12,7 +12,7 @@ trait HandlePermission
         return $this->checkPermissionThroughRole($this->roles, $permission);
     }
 
-    public function checkPermissionThroughRole($roles, $permission)
+    public function checkPermissionThroughRole($roles, $permission): bool
     {
         foreach ($roles as $role) {
             if ($role->permissions->contains('name', $permission)) {
