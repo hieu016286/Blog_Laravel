@@ -23,8 +23,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item {{ Request::is('posts*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Request::is('posts*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('posts*') || Request::is('allPosts*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('posts*') || Request::is('allPosts*') ? 'active' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="nav-icon bi bi-file-earmark-post" viewBox="0 0 16 16">
                             <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
                             <path d="M4 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7zm0-3a.5.5 0 0 1 .5-.5H7a.5.5 0 0 1 0 1H4.5a.5.5 0 0 1-.5-.5z"/>
@@ -35,6 +35,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @hasPermission('Index Posts')
+                        <li class="nav-item">
+                            <a href="{{ route('backend.allPosts.index') }}" class="nav-link {{ request()->routeIs('backend.allPosts.index') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Posts</p>
+                            </a>
+                        </li>
+                        @endhasPermission
                         <li class="nav-item">
                             <a href="{{ route('backend.posts.index') }}" class="nav-link {{ request()->routeIs('backend.posts.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
@@ -47,12 +55,14 @@
                                 <p>Create Post</p>
                             </a>
                         </li>
+                        @hasPermission('Approved Posts')
                         <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
+                            <a href="{{ route('backend.posts.pending') }}" class="nav-link {{ request()->routeIs('backend.posts.pending') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
+                                <p>Posts Pending</p>
                             </a>
                         </li>
+                        @endhasPermission
                     </ul>
                 </li>
                 <li class="nav-item">

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class PostService
 {
     use HandleImage;
-    protected $postRepository;
+    protected PostRepository $postRepository;
     public function __construct(PostRepository $postRepository) {
         $this->postRepository = $postRepository;
     }
@@ -70,6 +70,20 @@ class PostService
         $post = $this->postRepository->findById($id);
         $post->delete();
         $this->deleteImage($post->image);
+        return $post;
+    }
+
+    public function pending($request) {
+        $dataSearch = $request->all();
+        $dataSearch['title'] = $request->title ?? '';
+        return $this->postRepository->pending($dataSearch)->appends($request->all());
+    }
+
+    public function approved($id) {
+        $post = $this->postRepository->findById($id);
+        $post->update([
+            'is_approved' => 1
+        ]);
         return $post;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 abstract class BaseRepository
 {
-    protected $model;
+    protected mixed $model;
     abstract public function model();
 
     public function __construct() {
