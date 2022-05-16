@@ -20,6 +20,15 @@ class PermissionSeeder extends Seeder
                 'name' => 'Index Posts',
             ],
             [
+                'name' => 'Edit Posts',
+            ],
+            [
+                'name' => 'Delete Posts',
+            ],
+            [
+                'name' => 'Approved Posts',
+            ],
+            [
                 'name' => 'Index Post',
             ],
             [

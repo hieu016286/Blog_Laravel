@@ -3,7 +3,7 @@
 @section('content')
     <ul class="list-group mt-5">
         <li class="list-group-item">
-            <strong>Index Post</strong>
+            <strong>My Post</strong>
         </li>
         <li class="list-group-item">
             <form action="{{ route('backend.posts.index') }}" method="get">
