@@ -49,7 +49,7 @@ class PostController extends Controller
 
     public function destroy($id): RedirectResponse {
         $this->postService->delete($id);
-        return redirect()->route('backend.posts.index');
+        return redirect()->back();
     }
 
     public function pending(Request $request): View {
