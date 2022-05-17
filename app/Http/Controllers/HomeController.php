@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    protected PostService $postService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PostService $postService)
     {
+        $this->postService = $postService;
         $this->middleware('auth');
     }
 
@@ -21,8 +24,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $posts = $this->postService->acceptPosts($request);
+        return view('home',compact('posts','request'));
     }
 }
