@@ -21,8 +21,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware'=>['auth']], function (){
+   Route::post('favorite/{post}', [App\Http\Controllers\Frontend\FavoriteController::class, 'create'])->name('posts.favorite');
+});
+
 Route::group(['as' => 'frontend.','middleware' => ['auth']], function (){
-    Route::get('posts/{post}', [App\Http\Controllers\Frontend\PostController::class, 'show'])->name('posts.show');
+    Route::get('posts/{post}', [App\Http\Controllers\Frontend\PostController::class, 'show'])->name('posts.show')->where('post', '[0-9]+');
 });
 
 Route::group(['as' => 'backend.','middleware' => ['auth']], function (){
