@@ -26,4 +26,12 @@ class Post extends Model
     public function scopeWithTitle($query, $title) {
         return $title ? $query->where('title', 'LIKE', "%{$title}%") : null;
     }
+
+    public function scopeApproved($query){
+        return $query->where('is_approved',1);
+    }
+
+    public function scopePublished($query){
+        return $query->where('status',1);
+    }
 }

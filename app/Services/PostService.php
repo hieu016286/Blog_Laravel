@@ -14,6 +14,10 @@ class PostService
         $this->postRepository = $postRepository;
     }
 
+    public function count() {
+        return $this->postRepository->count();
+    }
+
     public function searchAllPost($request) {
         $dataSearch = $request->all();
         $dataSearch['title'] = $request->title ?? '';
@@ -24,6 +28,12 @@ class PostService
         $dataSearch = $request->all();
         $dataSearch['title'] = $request->title ?? '';
         return $this->postRepository->search($dataSearch, Auth::id())->appends($request->all());
+    }
+
+    public function acceptPosts($request) {
+        $dataSearch = $request->all();
+        $dataSearch['title'] = $request->title ?? '';
+        return $this->postRepository->acceptPosts($dataSearch)->appends($request->all());
     }
 
     public function findById($id) {

@@ -24,4 +24,9 @@ class PostRepository extends BaseRepository
         $title = $dataSearch['title'];
         return $this->model->where('is_approved', 0)->withTitle($title)->latest('id')->paginate(5);
     }
+
+    public function acceptPosts($dataSearch) {
+        $title = $dataSearch['title'];
+        return $this->model->latest('id')->approved()->published()->withTitle($title)->paginate(5);
+    }
 }

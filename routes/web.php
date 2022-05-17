@@ -21,6 +21,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['as' => 'frontend.','middleware' => ['auth']], function (){
+    Route::get('posts/{post}', [App\Http\Controllers\Frontend\PostController::class, 'show'])->name('posts.show');
+});
 
 Route::group(['as' => 'backend.','middleware' => ['auth']], function (){
    Route::get('dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
