@@ -24,6 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware'=>['auth']], function (){
    Route::post('favorite/{post}', [App\Http\Controllers\Frontend\FavoriteController::class, 'create'])->name('posts.favorite');
+   Route::post('comment/{post}', [App\Http\Controllers\Frontend\CommentController::class, 'create'])->name('posts.comment.create');
+   Route::delete('comment/{post}', [App\Http\Controllers\Frontend\CommentController::class, 'destroy'])->name('posts.comment.destroy');
 });
 
 Route::group(['as' => 'frontend.','middleware' => ['auth']], function (){
