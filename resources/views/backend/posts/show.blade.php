@@ -56,7 +56,7 @@
                                     <h4>{{ $c->user->name }}</h4>
                                     <span>- {{ $c->created_at->diffForHumans() }}</span>
                                     <br><br>
-                                    <p>{{ $c->comment }}</p>
+                                    <p class="text-dark">{{ $c->comment }}</p>
                                     @if($post->user_id === Auth::id() || $c->user_id === Auth::id() || Auth::user()->hasPermission())
                                         <a class="btn btn-danger" onclick="deleteComment({{ $c->id }})">
                                             <i class="fa-solid fa-trash"></i>
@@ -101,7 +101,7 @@
                                 <h4>{{ Auth::user()->name }}</h4>
                                 <span>- ${comment.created_at}</span>
                                 <br><br>
-                                <p>${comment.comment}</p>
+                                <p class="text-dark">${comment.comment}</p>
                                 <a class="btn btn-danger" onclick="deleteComment(${comment.id})">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>

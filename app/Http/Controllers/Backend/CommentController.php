@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\CommentRequest;
+use App\Mail\Comment;
 use App\Services\CommentService;
 use App\Services\PostService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -50,6 +52,7 @@ class CommentController extends Controller
         $post = $this->postService->findById($request->id);
         if(Gate::allows('favorite|comment-post', $post)) {
             $comment = $this->commentService->create($request, $post);
+            Mail::to($post->user->email)->send(new Comment($comment));
             return response()->json([
                 'message' => 'Comment Success !!!',
                 'comment' => $comment

@@ -84,7 +84,7 @@
         </main>
     </div>
     <!-- jQuery -->
-    <script src="{{ asset('frontend/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
     <script>
         $.ajaxSetup({
             headers: {
