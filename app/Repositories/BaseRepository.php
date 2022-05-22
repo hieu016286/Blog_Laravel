@@ -18,8 +18,4 @@ abstract class BaseRepository
     public function create($dataCreate) {
         return $this->model->create($dataCreate);
     }
-
-    public function count() {
-        return $this->model->all()->count();
-    }
 }

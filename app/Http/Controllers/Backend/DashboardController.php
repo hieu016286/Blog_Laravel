@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\PostService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -16,9 +17,11 @@ class DashboardController extends Controller
         $this->userService = $userService;
     }
 
-    public function index() {
-        $posts = $this->postService->count();
-        $users = $this->userService->count();
-        return view('backend.dashboard', compact('posts','users'));
+    public function index(Request $request): View
+    {
+        $posts = $this->postService->index($request);
+        $postCount = $this->postService->count();
+        $userCount = $this->userService->count();
+        return view('backend.dashboard', compact('postCount','userCount','posts','request'));
     }
 }

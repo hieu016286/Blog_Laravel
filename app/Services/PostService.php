@@ -15,25 +15,14 @@ class PostService
     }
 
     public function count() {
-        return $this->postRepository->count();
+        return $this->postRepository->count(Auth::id());
     }
 
-    public function searchAllPost($request) {
+    public function index($request) {
         $dataSearch = $request->all();
-        $dataSearch['title'] = $request->title ?? '';
-        return $this->postRepository->searchAllPost($dataSearch)->appends($request->all());
-    }
-
-    public function search($request) {
-        $dataSearch = $request->all();
-        $dataSearch['title'] = $request->title ?? '';
-        return $this->postRepository->search($dataSearch, Auth::id())->appends($request->all());
-    }
-
-    public function acceptPosts($request) {
-        $dataSearch = $request->all();
-        $dataSearch['title'] = $request->title ?? '';
-        return $this->postRepository->acceptPosts($dataSearch)->appends($request->all());
+        $dataSearch['user_id'] = Auth::id();
+        $dataSearch['from'] = $request->path();
+        return $this->postRepository->index($dataSearch)->appends($request->all());
     }
 
     public function findById($id) {
@@ -55,11 +44,10 @@ class PostService
         return $post;
     }
 
-    public function update($request, $id) {
-        $post = $this->postRepository->findById($id);
+    public function update($request, $post) {
         $dataUpdate = $request->all();
-        $dataUpdate['slug'] = Str::slug($dataUpdate['title'],'-');
-        if(!isset($dataUpdate['status'])) {
+        isset($dataUpdate['title']) ? $dataUpdate['slug'] = Str::slug($dataUpdate['title'],'-') : null;
+        if(!isset($dataUpdate['status']) && count($dataUpdate) > 0) {
             $post->update([
                 'status' => 0
             ]);
@@ -76,24 +64,19 @@ class PostService
         return $post;
     }
 
-    public function delete($id) {
-        $post = $this->postRepository->findById($id);
+    public function delete($post) {
         $post->delete();
         $this->deleteImage($post->image);
         return $post;
     }
 
-    public function pending($request) {
-        $dataSearch = $request->all();
-        $dataSearch['title'] = $request->title ?? '';
-        return $this->postRepository->pending($dataSearch)->appends($request->all());
-    }
-
-    public function approved($id) {
-        $post = $this->postRepository->findById($id);
-        $post->update([
-            'is_approved' => 1
-        ]);
-        return $post;
+    public function favorite($post) {
+        $isFavorite = Auth::user()->favorite_posts()->where('post_id',$post->id)->count();
+        if($isFavorite === 0) {
+            Auth::user()->favorite_posts()->attach($post->id);
+        } else {
+            Auth::user()->favorite_posts()->detach($post->id);
+        }
+        return $isFavorite;
     }
 }

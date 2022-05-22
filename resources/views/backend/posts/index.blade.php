@@ -59,14 +59,14 @@
                             @if($post->status == true)
                                 <span class="badge bg-success">Published</span>
                             @else
-                                <span class="badge bg-danger">Pending</span>
+                                <span class="badge bg-danger">Private</span>
                             @endif
                         </td>
                         <td>
                             @if($post->is_approved == true)
                                 <span class="badge bg-success">Approved</span>
                             @else
-                                <span class="badge bg-danger">Pending</span>
+                                <span class="badge bg-danger">Not Approved</span>
                             @endif
                         </td>
                         <td>

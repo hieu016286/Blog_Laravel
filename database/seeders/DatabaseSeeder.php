@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,10 +13,9 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->call([
-            PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class
         ]);
@@ -32,8 +29,5 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
-
-        $guest = Role::where('name', '=', 'guest')->first();
-        $guest->permissions()->attach(Permission::whereNotIn('name', ['Index Posts','Edit Posts','Delete Posts','Approved Posts'])->pluck('id')->toArray());
     }
 }

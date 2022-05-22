@@ -19,7 +19,7 @@
                         @forelse($posts as $post)
                             <!-- Blog post-->
                             <div class="card mb-4">
-                                <a href="{{ route('frontend.posts.show',$post->id) }}"><img class="card-img-top" src="{{ is_null($post->image) ? asset('storage/post/default.png') : asset('storage/post/'.$post->image) }}" alt="..." /></a>
+                                <a href="{{ route('backend.posts.show',$post->id) }}"><img class="card-img-top" src="{{ is_null($post->image) ? asset('storage/post/default.png') : asset('storage/post/'.$post->image) }}" alt="..." /></a>
                                 <div class="card-body">
                                     <div class="small text-muted">{{ $post->created_at }}</div>
                                     <h2 class="card-title h4">{{ $post->title }}</h2>
@@ -60,8 +60,6 @@
             </div>
         </div>
     </div>
-    <!-- Footer-->
-    @include('layouts.frontend.partials.footer')
 @endsection
 
 @push('scripts')
@@ -69,7 +67,7 @@
         function favoritePost(id) {
             $.ajax({
                 type: 'POST',
-                url: `/favorite/${id}`,
+                url: `posts/${id}/favorite`,
                 data: {},
             }).then(function (res) {
                 if(res.message === 'Favorite Success !!!') {

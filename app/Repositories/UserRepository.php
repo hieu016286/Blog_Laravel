@@ -10,4 +10,8 @@ class UserRepository extends BaseRepository
     {
         return User::class;
     }
+
+    public function count() {
+        return $this->model->all()->count();
+    }
 }
