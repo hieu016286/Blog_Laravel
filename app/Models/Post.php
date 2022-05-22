@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -41,11 +42,30 @@ class Post extends Model
         return $title ? $query->where('title', 'LIKE', "%{$title}%") : null;
     }
 
-    public function scopeApproved($query){
-        return $query->where('is_approved',1);
+    public function scopeWithApproved($query, $isApproved, $from){
+        if($isApproved === '' && $from !== 'home') {
+            return null;
+        } else {
+            if($from === 'home') {
+                return $query->where('is_approved', 1);
+            } else {
+                return $query->where('is_approved', $isApproved);
+            }
+        }
     }
 
-    public function scopePublished($query){
-        return $query->where('status',1);
+    public function scopeWithPublished($query, $from){
+        return $from === 'home' ?  $query->where('status', 1) : null;
     }
+
+    public function scopeWithAuthor($query, $id, $from){
+        if(!Auth::user()->hasPermission() && $from !== 'home') {
+            return $query->where('user_id', $id);
+        } elseif (Auth::user()->hasPermission() && $from === 'posts') {
+            return $query->where('user_id', $id);
+        } else {
+            return null;
+        }
+    }
+
 }

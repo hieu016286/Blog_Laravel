@@ -3,41 +3,30 @@
 namespace App\Services;
 
 use App\Repositories\CommentRepository;
-use App\Repositories\PostRepository;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class CommentService
 {
     protected CommentRepository $commentRepository;
-    protected PostRepository $postRepository;
-    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository) {
+    public function __construct(CommentRepository $commentRepository) {
         $this->commentRepository = $commentRepository;
-        $this->postRepository = $postRepository;
     }
 
-    public function create($request, $id): RedirectResponse
+    public function findById($id) {
+        return $this->commentRepository->findById($id);
+    }
+
+    public function create($request, $post)
     {
         $dataCreate = $request->all();
-        $dataCreate['post_id'] = $id;
+        $dataCreate['post_id'] = $post->id;
         $dataCreate['user_id'] = Auth::id();
-        $post = $this->postRepository->findById($id);
-        if($post->status === 1 && $post->is_approved === 1) {
-            return $this->commentRepository->create($dataCreate);
-        } else {
-            return redirect()->back();
-        }
+        return $this->commentRepository->create($dataCreate);
     }
 
-    public function delete($id): RedirectResponse
+    public function delete($comment)
     {
-        $comment = $this->commentRepository->findById($id);
-        if($comment->post->user_id === Auth::id() || $comment->user_id === Auth::id()) {
-            $comment->delete();
-            return $comment;
-        }
-        else {
-            return redirect()->back();
-        }
+        $comment->delete();
+        return $comment;
     }
 }

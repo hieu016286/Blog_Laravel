@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = $this->postService->acceptPosts($request);
+        $posts = $this->postService->index($request);
         return view('home',compact('posts','request'));
     }
 }

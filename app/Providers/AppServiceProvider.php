@@ -28,8 +28,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        Blade::if('hasPermission', function ($permission) {
-            return Auth::user()->hasPermission($permission);
+        Blade::if('hasPermission', function () {
+            return Auth::user()->hasPermission();
         });
+
     }
 }
