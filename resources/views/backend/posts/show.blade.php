@@ -44,6 +44,10 @@
                                 </div>
                                 <div class="col-sm-12 mt-3">
                                     <button class="btn btn-success" disabled data-post-id="{{ $post->id }}">Submit</button>
+                                    <input type="text" id="user" value="{{ $post->user_id }}" style="display: none">
+                                    <form action="" method="post">
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +79,21 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            Pusher.logToConsole = true;
+            let pusher = new Pusher('5a0433c31f35bd16d9d9', {
+                encrypted: true,
+                cluster: 'ap1'
+            });
+            // let userId = $('#user').val();
+            let channel = pusher.subscribe('my-channel');
+            channel.bind('my-event', function (data){
+                console.log(data);
+                // alert(JSON.stringify(data));
+                // $('#no-notification').remove();
+                // $('.wrapper-notification').append(`<a class="dropdown-item" href="#">{data.notification}</a>`);
+                // $('#dropdownMenuButton').css('color', 'red');
+                // $('#list-comments').append(`<p class="card-text pl-2"><strong>+ data.senderName+: </strong>+ data.comment+</p>`)
+            });
             $('.text-area-message').keyup(function() {
                 if($(this).val() !== '') {
                     $('.btn-success').prop('disabled', false);

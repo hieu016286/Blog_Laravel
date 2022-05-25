@@ -9,5 +9,17 @@
             <a href="{{ route('home') }}" class="nav-link">Home</a>
         </li>
     </ul>
+    <ul class="navbar-nav ml-auto">
+        <form action="{{ route('backend.localization') }}" method="GET" id="form-change-language">
+            <div style="width: 100px">
+                <select name="lang" class="form-control" onchange="this.form.submit()">
+                    @foreach(config('const.lang') as $key => $lang)
+                        <img src="{{ asset('image/'.$key) }}" alt="">
+                        <option value="{{ $key }}" {{ (session()->get('locale') == $lang) ? 'selected' : '' }}>{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
+    </ul>
 </nav>
 <!-- /.navbar -->
