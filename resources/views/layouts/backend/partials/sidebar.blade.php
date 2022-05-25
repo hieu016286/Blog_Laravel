@@ -21,7 +21,7 @@
                             <path d="M4 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7zm0-3a.5.5 0 0 1 .5-.5H7a.5.5 0 0 1 0 1H4.5a.5.5 0 0 1-.5-.5z"/>
                         </svg>
                         <p>
-                            Posts
+                            {{ trans('word.posts') }}
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -29,13 +29,13 @@
                         <li class="nav-item">
                             <a href="{{ route('backend.posts.index') }}" class="nav-link {{ request()->routeIs('backend.posts.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>My Post</p>
+                                <p>{{ trans('word.my_post') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('backend.posts.create') }}" class="nav-link {{ request()->routeIs('backend.posts.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Create Post</p>
+                                <p>{{ trans('word.create_post') }}</p>
                             </a>
                         </li>
                     </ul>
