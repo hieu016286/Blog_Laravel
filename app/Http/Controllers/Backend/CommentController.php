@@ -54,7 +54,7 @@ class CommentController extends Controller
         if(Gate::allows('favorite|comment-post', $post)) {
             $comment = $this->commentService->create($request, $post);
             Mail::to($post->user->email)->send(new Comment($comment));
-            event(new PostNotification('New Comment In Your Post', $comment));
+            event(new PostNotification($comment));
             return response()->json([
                 'message' => 'Comment Success !!!',
                 'comment' => $comment

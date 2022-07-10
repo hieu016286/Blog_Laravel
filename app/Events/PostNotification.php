@@ -13,7 +13,6 @@ use Illuminate\Queue\SerializesModels;
 class PostNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    protected $notification;
     protected $comment;
 
     /**
@@ -21,9 +20,8 @@ class PostNotification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($notification, $comment)
+    public function __construct($comment)
     {
-        $this->notification = $notification;
         $this->comment = $comment;
     }
 
@@ -35,11 +33,17 @@ class PostNotification implements ShouldBroadcast
 
     public function broadcastOn(): array|Channel
     {
-        return new Channel('my-channel');
+        return new PrivateChannel('send-notification-to-user.'. $this->comment->post->user_id);
     }
 
-    public function broadcastAs(): array
+    public function broadcastAs(): string
     {
-        return ['my-event'];
+        return 'send-notification-to-user-event';
+    }
+
+    public function broadcastWith() {
+        return [
+            'comment' => $this->comment
+        ];
     }
 }

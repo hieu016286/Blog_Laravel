@@ -77,23 +77,9 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script>
         $(document).ready(function() {
-            Pusher.logToConsole = true;
-            let pusher = new Pusher('5a0433c31f35bd16d9d9', {
-                encrypted: true,
-                cluster: 'ap1'
-            });
-            // let userId = $('#user').val();
-            let channel = pusher.subscribe('my-channel');
-            channel.bind('my-event', function (data){
-                console.log(data);
-                // alert(JSON.stringify(data));
-                // $('#no-notification').remove();
-                // $('.wrapper-notification').append(`<a class="dropdown-item" href="#">{data.notification}</a>`);
-                // $('#dropdownMenuButton').css('color', 'red');
-                // $('#list-comments').append(`<p class="card-text pl-2"><strong>+ data.senderName+: </strong>+ data.comment+</p>`)
-            });
             $('.text-area-message').keyup(function() {
                 if($(this).val() !== '') {
                     $('.btn-success').prop('disabled', false);
@@ -145,5 +131,20 @@
                 }
             })
         }
+        Pusher.logToConsole = true;
+        let pusher = new Pusher('5a0433c31f35bd16d9d9', {
+            encrypted: true,
+            cluster: 'ap1'
+        });
+        // let userId = $('#user').val();
+        let channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function (data){
+            console.log(data);
+            // alert(JSON.stringify(data));
+            // $('#no-notification').remove();
+            // $('.wrapper-notification').append(`<a class="dropdown-item" href="#">{data.notification}</a>`);
+            // $('#dropdownMenuButton').css('color', 'red');
+            // $('#list-comments').append(`<p class="card-text pl-2"><strong>+ data.senderName+: </strong>+ data.comment+</p>`)
+        });
     </script>
 @endpush
